@@ -1,0 +1,22 @@
+#title{
+    Color:black;
+    font-size: xx-large;
+    text-align-last: left;
+    font-weight: bold;
+}
+
+#p1{
+    Color:white;
+    font-size: large;
+    font-display:inherit;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.div{
+    background-image:url(../Images/Dragon_Hunt_TradingCard.jpg) ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: none;
+
+}
