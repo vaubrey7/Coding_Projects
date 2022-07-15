@@ -1,131 +1,106 @@
-var todoInput = document.querySelector("#todo-text");
-var todoForm = document.querySelector("#todo-form");
-var todoList = document.querySelector("#todo-list");
-var todoCountSpan = document.querySelector("#todo-count");
-var timerEl = document.getElementById('countdown');
-var mainEl = document.getElementById('main');
+const question = document.querySelector('#question');
+const choices = Array.from(document.querySelectorAll('.choice-text'));
+const progressText = document.querySelector('#progressText');
+const scoreText = document.querySelector('#scoreText');
+const progressFull = document.querySelector('#progressFull');
 
-var todos = [];
+let currentQuestion = {}
+let acceptingAnswer = true
+let score = 0
+let questionCounter = 0
+let availableQuestions = []
 
-// The following function renders items in a todo list as <li> elements
-function renderTodos() {
-  // Clear todoList element and update todoCountSpan
-  todoList.innerHTML = "";
-  todoCountSpan.textContent = todos.length;
+let questions =[
+  
+  {question: "What is 2+2?",
+   choice1: "2",
+   choice2: "4",
+   choice3: "22",
+   choice4: "44"
+  },
+  {question: "What does the fox say?",
+   choice1: "oh no",
+   choice2: "run",
+   choice3: "hide",
+   choice4: "reneneneneneneneneneneneneenne",
+  },
+  {question: "what is the biggest mammal on planet Earth",
+   choice1: "Asian Elephant",
+   choice2: "African Elephant",
+   choice3: "Polar Bear",
+   choice4: "Blue Whale"
+  },
+  {question: "Best food on planet Earth",
+   choice1: "TAco",
+   choice2: "TaCo",
+   choice3: "Tac0",
+   choice4: "Taco",
+  },
+];
 
-  // Render a new li for each todo
-  for (var i = 0; i < todos.length; i++) {
-    var todo = todos[i];
+const SCORE_POINTS = 180
+const MAX_QUESTIONS = 4
 
-    var li = document.createElement("li");
-    li.textContent = todo;
-    li.setAttribute("data-index", i);
-
-    var button = document.createElement("button");
-    button.textContent = "Complete ✔️";
-
-    li.appendChild(button);
-    todoList.appendChild(li);
-  }
+startGame = () => {
+  questionCounter = 0
+  score = 0
+  availableQuestions = [...questions]
+  getNewQuestion()
 }
-function countdown() {
-  var timeLeft = 120;
 
-  // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var timeInterval = setInterval(function () {
-    // As long as the `timeLeft` is greater than 1
-    if (timeLeft > 1) {
-      // Set the `textContent` of `timerEl` to show the remaining seconds
-      timerEl.textContent = timeLeft + ' seconds remaining';
-      // Decrement `timeLeft` by 1
-      timeLeft--;
-    } else if (timeLeft === 1) {
-      // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
-      timerEl.textContent = timeLeft + ' second remaining';
-      timeLeft--;
-    } else {
-      // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timerEl.textContent = '';
-      // Use `clearInterval()` to stop the timer
-      clearInterval(timeInterval);
-      // Call the `displayMessage()` function
-      displayMessage();
+getNewQuestion = () => {
+  if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
+    localStorage.setIte('mostRecentScore', score)
+  };
+
+questionCounter++
+progressText.innerText = 'Question ${questionCounter} of ${MAX_QUESTIONS}'
+progressBarFull.style.width = '${(questionCounter/MAX_QUESTIONS) * 100}%'
+
+const questionsIndex = Math.floor(Math.random() * availableQuestions.length)
+currentQuestion = availableQuestions[questionsIndex]
+question.innerText = currentQuestion.question
+
+choices.forEach(choice => {
+  const number = choice.dataset['number']
+  choice.innerText = currentQuestion['choice' + number];
+})
+
+availableQuestions.splice(questionsIndex, 1)
+
+acceptingAnswer = true
+
+}; 
+
+choices.forEach(choice => {
+  choice.addEventListener('click', e => {
+    if(!acceptingAnswer) return
+    
+    acceptingAnswers = false
+    const selectedChoice = e.target
+    const selectedAnswer = selectedChoice.dataset['number']
+    
+    let classToApply: any
+    if(classToApply) === 'correct' {
+      incrementScore(SCORE_POINTS)
     }
-  }, 1000);
-}
-function displayMessage() {
-  var wordCount = 120;
 
-  // Uses the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var msgInterval = setInterval(function () {
-    // If there are no more words left in the message
-    if (words[wordCount] === undefined) {
-      // Use `clearInterval()` to stop the timer
-      clearInterval(msgInterval);
-    } else {
-      // Display one word of the message
-      mainEl.textContent = words[wordCount];
-      wordCount++;
-    }
-  }, 1000);
-}
+    selectedChoice.parentaElement.classList.add(classToApply)
+    
+    setTimeout(() => { 
+      selectedChoice.parentaElement.classList.remove(classToApply)
+      getNewQuestion()
+    
+    }, 1000)
 
-countdown();
+    
+  })
 
-// This function is being called below and will run when the page loads.
-function init() {
-  // Get stored todos from localStorage
-  var storedTodos = JSON.parse(localStorage.getItem("todos"));
+})
 
-  // If todos were retrieved from localStorage, update the todos array to it
-  if (storedTodos !== null) {
-    todos = storedTodos;
-  }
-
-  // This is a helper function that will render todos to the DOM
-  renderTodos();
+incrementScore = num => {
+  score =+num
+  scoreText.innerText = score
 }
 
-function storeTodos() {
-  // Stringify and set key in localStorage to todos array
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-// Add submit event to form
-todoForm.addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  var todoText = todoInput.value.trim();
-
-  // Return from function early if submitted todoText is blank
-  if (todoText === "") {
-    return;
-  }
-
-  // Add new todoText to todos array, clear the input
-  todos.push(todoText);
-  todoInput.value = "";
-
-  // Store updated todos in localStorage, re-render the list
-  storeTodos();
-  renderTodos();
-});
-
-// Add click event to todoList element
-todoList.addEventListener("click", function(event) {
-  var element = event.target;
-
-  // Checks if element is a button
-  if (element.matches("button") === true) {
-    // Get its data-index value and remove the todo element from the list
-    var index = element.parentElement.getAttribute("data-index");
-    todos.splice(index, 1);
-
-    // Store updated todos in localStorage, re-render the list
-    storeTodos();
-    renderTodos();
-  }
-});
-
-// Calls init to retrieve data and render it to the page on load
-init()
+startGame()
