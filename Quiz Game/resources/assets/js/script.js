@@ -1,7 +1,7 @@
 const question = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
-const scoreText = document.querySelector('#scoreText');
+const scoreText = document.querySelector('#score');
 const progressFull = document.querySelector('#progressFull');
 
 let currentQuestion = {}
@@ -13,32 +13,36 @@ let availableQuestions = []
 let questions =[
   
   {question: "What is 2+2?",
-   choice1: "2",
-   choice2: "4",
-   choice3: "22",
-   choice4: "44"
-  },
+  choice1: "44",
+  choice2: "4",
+  choice3: "22",
+  choice4: "2",
+  answer: 4, 
+ },
   {question: "What does the fox say?",
    choice1: "oh no",
    choice2: "run",
    choice3: "hide",
    choice4: "reneneneneneneneneneneneneenne",
+   answer: 4, 
   },
   {question: "what is the biggest mammal on planet Earth",
-   choice1: "Asian Elephant",
-   choice2: "African Elephant",
-   choice3: "Polar Bear",
-   choice4: "Blue Whale"
-  },
+  choice1: "Asian Elephant",
+  choice2: "African Elephant",
+  choice3: "Polar Bear",
+  choice4: "Blue Whale",
+  answer: 4, 
+ },
   {question: "Best food on planet Earth",
    choice1: "TAco",
    choice2: "TaCo",
    choice3: "Tac0",
    choice4: "Taco",
+   answer: 4,
   },
 ];
 
-const SCORE_POINTS = 180
+const SCORE_POINTS = 100
 const MAX_QUESTIONS = 4
 
 startGame = () => {
@@ -50,12 +54,15 @@ startGame = () => {
 
 getNewQuestion = () => {
   if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
-    localStorage.setIte('mostRecentScore', score)
+    localStorage.setItem('mostRecentScore', score)
+
+    return window.location.assign('/end.html')
+
   };
 
 questionCounter++
-progressText.innerText = 'Question ${questionCounter} of ${MAX_QUESTIONS}'
-progressBarFull.style.width = '${(questionCounter/MAX_QUESTIONS) * 100}%'
+progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`
+progressBarFull.Style.Width =` ${(questionCounter/MAX_QUESTIONS) * 100}%`
 
 const questionsIndex = Math.floor(Math.random() * availableQuestions.length)
 currentQuestion = availableQuestions[questionsIndex]
@@ -76,12 +83,15 @@ choices.forEach(choice => {
   choice.addEventListener('click', e => {
     if(!acceptingAnswer) return
     
-    acceptingAnswers = false
+    acceptingAnswer = false
+    
     const selectedChoice = e.target
     const selectedAnswer = selectedChoice.dataset['number']
     
-    let classToApply: any
-    if(classToApply) === 'correct' {
+    let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect'
+    
+    
+    if(classToApply === 'correct'){
       incrementScore(SCORE_POINTS)
     }
 
