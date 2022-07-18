@@ -33,7 +33,7 @@
     width: 100%;
 }
 
-.correc {
+.correct {
     background: linear-gradient(32deg, rgba(11, 233, 36) 0% rgba(41, 232, 111) 100%);
 }
 
@@ -46,7 +46,7 @@
     justify-content: space-between;
 }
 
-.hud.prefix {
+.hud-prefix {
     text-align:center;
     font-size: 5rem;
     color: black!important;

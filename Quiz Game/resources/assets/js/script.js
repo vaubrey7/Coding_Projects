@@ -17,7 +17,7 @@ let questions =[
   choice2: "4",
   choice3: "22",
   choice4: "2",
-  answer: 4, 
+  answer: 2, 
  },
   {question: "What does the fox say?",
    choice1: "oh no",
@@ -39,8 +39,8 @@ let questions =[
    choice3: "Tac0",
    choice4: "Taco",
    answer: 4,
-  },
-];
+  }
+]
 
 const SCORE_POINTS = 100
 const MAX_QUESTIONS = 4
@@ -58,7 +58,7 @@ getNewQuestion = () => {
 
     return window.location.assign('/end.html')
 
-  };
+  }
 
 questionCounter++
 progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`
@@ -77,7 +77,7 @@ availableQuestions.splice(questionsIndex, 1)
 
 acceptingAnswer = true
 
-}; 
+}
 
 choices.forEach(choice => {
   choice.addEventListener('click', e => {
@@ -109,7 +109,7 @@ choices.forEach(choice => {
 })
 
 incrementScore = num => {
-  score =+num
+  score +=num
   scoreText.innerText = score
 }
 
