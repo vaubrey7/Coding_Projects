@@ -30,6 +30,17 @@ h2{
   margin-bottom: 4rem;
 }
 
+
+.container2 {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 30rem;
+}
 .container{
   width: 100vw;
   height: 100vh;
@@ -116,7 +127,7 @@ input{
 }
 
 input::placeholder{
-  color:black;
+  color:blue;
 }
 
 #username{
@@ -132,5 +143,5 @@ input::placeholder{
 .fa-3x-home{
   margin-left: 3rem;
   font-size: 2rem;
-  color:black
+  color:blue;
 }
