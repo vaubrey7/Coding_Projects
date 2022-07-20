@@ -53,7 +53,7 @@ startGame = () => {
   score = 0
   availableQuestions = [...questions]
   getNewQuestion()
-}
+} 
   
 getNewQuestion = () => {
     if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
@@ -65,7 +65,7 @@ getNewQuestion = () => {
 
 questionCounter++
 progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`
-progressBarFull.Style.Width =`${(questionCounter/MAX_QUESTIONS) * 100}%`
+progressBarFull.style.width =`${(questionCounter/MAX_QUESTIONS) * 100}%`
 
 const questionsIndex = Math.floor(Math.random() * availableQuestions.length)
 currentQuestion = availableQuestions[questionsIndex]
