@@ -1,11 +1,11 @@
-html, body{
-  height : 100%;
-  width : 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 
-.text-green
-{
-color : #1aad53;
+.text-green {
+  color: #1aad53;
 }
 
 
@@ -13,9 +13,10 @@ color : #1aad53;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  --locked-color: #5fadbf;
-  --unlocked-color: #ff5153;
+  --unlocked-color: #5fadbf;
+  --locked-color: #ff5153;
 }
+
 .lock-container {
   display: flex;
   align-items: center;
@@ -33,6 +34,7 @@ color : #1aad53;
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
+
 .lock:after {
   content: "";
   display: block;
@@ -46,6 +48,7 @@ color : #1aad53;
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
+
 .lock:before {
   content: "";
   display: block;
@@ -62,31 +65,38 @@ color : #1aad53;
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
+
 /* Locked Hover */
 .lock:hover:before {
   height: 12px;
 }
+
 /* Unlocked */
 .unlocked {
   transform: rotate(10deg);
 }
+
 .unlocked:before {
   bottom: 130%;
   left: 31%;
   margin-left: -11.5px;
   transform: rotate(-45deg);
 }
+
 .unlocked,
 .unlocked:before {
   border-color: var(--unlocked-color);
 }
+
 .unlocked:after {
   background: var(--unlocked-color);
 }
+
 /* Unlocked Hover */
 .unlocked:hover {
   transform: rotate(3deg);
 }
+
 .unlocked:hover:before {
   height: 10px;
   left: 40%;
